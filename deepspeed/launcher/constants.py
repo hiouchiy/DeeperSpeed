@@ -11,6 +11,7 @@ JSRUN_LAUNCHER = 'jsrun'
 MPICH_LAUNCHER = 'mpich'
 IMPI_LAUNCHER = 'impi'
 SLURM_LAUNCHER = 'slurm'
+MOSAICML_LAUNCHER = 'mosaicml'
 MVAPICH_LAUNCHER = 'mvapich'
 MVAPICH_TMP_HOSTFILE = '/tmp/deepspeed_mvapich_hostfile'
 
