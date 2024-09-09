@@ -487,6 +487,7 @@ class MosaicMLRunner(MultiNodeRunner):
             "--node_rank={}".format(os.environ['NODE_RANK']),
             "--master_addr={}".format(os.environ['MASTER_ADDR']),
             "--master_port={}".format(os.environ['MASTER_PORT']),
+            "--no_ssh_check",
         ]
 
         return deepspeed_launch + [self.user_script] + self.user_arguments
