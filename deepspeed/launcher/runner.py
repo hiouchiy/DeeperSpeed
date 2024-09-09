@@ -444,19 +444,19 @@ def main(args=None):
     active_resources = parse_inclusion_exclusion(resource_pool, args.include, args.exclude)
     env = os.environ.copy()
 
-    # validate that passwordless-ssh is workly properly with this hostfile
-    if multi_node_exec and not args.no_ssh_check:
-        first_host = list(active_resources.keys())[0]
-        try:
-            ssh_check_cmd = "ssh -o PasswordAuthentication=no "
-            if args.ssh_port is not None:
-                ssh_check_cmd += f"-p {args.ssh_port} "
-            ssh_check_cmd += f"{first_host} hostname"
-            subprocess.check_call(ssh_check_cmd, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, shell=True)
-        except subprocess.CalledProcessError:
-            raise RuntimeError(
-                f"Using hostfile at {args.hostfile} but host={first_host} was not reachable via ssh. If you are running with a single node please remove {args.hostfile} or setup passwordless ssh."
-            )
+    # # validate that passwordless-ssh is workly properly with this hostfile
+    # if multi_node_exec and not args.no_ssh_check:
+    #     first_host = list(active_resources.keys())[0]
+    #     try:
+    #         ssh_check_cmd = "ssh -o PasswordAuthentication=no "
+    #         if args.ssh_port is not None:
+    #             ssh_check_cmd += f"-p {args.ssh_port} "
+    #         ssh_check_cmd += f"{first_host} hostname"
+    #         subprocess.check_call(ssh_check_cmd, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, shell=True)
+    #     except subprocess.CalledProcessError:
+    #         raise RuntimeError(
+    #             f"Using hostfile at {args.hostfile} but host={first_host} was not reachable via ssh. If you are running with a single node please remove {args.hostfile} or setup passwordless ssh."
+    #         )
 
     if not args.master_addr:
         assert multi_node_exec
