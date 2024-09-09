@@ -526,6 +526,10 @@ def main(args=None):
         if args.bind_core_list is not None:
             deepspeed_launch.append(f"--bind_core_list={args.bind_core_list}")
         cmd = deepspeed_launch + [args.user_script] + args.user_args
+
+        logger.info(f"cmd = {' '.join(cmd)}")
+
+        result = subprocess.Popen(cmd, env=env)
     else:
         args.launcher = args.launcher.lower()
         if args.launcher == PDSH_LAUNCHER:
@@ -585,10 +589,9 @@ def main(args=None):
         else:
             cmd = runner.get_cmd(env, active_resources)
 
-    logger.info(f"cmd = {' '.join(cmd)}")
+        logger.info(f"cmd = {' '.join(cmd)}")
 
-    # result = subprocess.Popen(cmd, env=env)
-    result = subprocess.Popen(cmd, env=dict(env, **runner.exports))
+        result = subprocess.Popen(cmd, env=dict(env, **runner.exports))
 
     def sigkill_handler(signum, frame):
         result.send_signal(signal.SIGINT)
